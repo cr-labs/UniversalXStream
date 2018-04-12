@@ -10,7 +10,7 @@ import com.thoughtworks.xstream.XStream;
 /**
  * An implementation of XStream tuned for universal use.
  * Be sure to call excludeClasses() before instantiating, if intending to leave classes out
- * 
+ *
  * @author jim
  *
  */
@@ -28,17 +28,17 @@ public class UniversalXStream extends XStream {
 	public static void includeAllClasses() {
 		excludeClasses.removeAllElements();
 	}
-	
+
 	public String toXML(Object o) {
 		return super.toXML(o);
 	}
-	
+
 
 	public Object fromXML(String s) {
 		return super.fromXML(s);
 	}
 
-	
+
 	// omit all fields that are not to be serialized by our serializer. Only our own declared classes should be serialized
 	@SuppressWarnings("unchecked")
 	public UniversalXStream() {
@@ -52,32 +52,32 @@ public class UniversalXStream extends XStream {
 			}
 		}
 
-	
-	
-	
+
+
+
 	}
 
 
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	public static void main(String[] args) {
 		UniversalXStream.excludeClasses(Vector.class);
-		
+
 		String a = "Hello";
 		Vector <String> v = new Vector <String> ();
 		v.add("a");
 		v.add("b");
 		v.add(a);
-		
+
 		UniversalXStream xs = new UniversalXStream();
 		System.out.println(xs.toXML(v));
-		
+
 		UniversalXStream.includeAllClasses();
-		
+
 		com.challengeandresponse.universalxstream.test.Test t = new com.challengeandresponse.universalxstream.test.Test();
 		t.castle = "castle";
 		t.elephant = "elephant";
@@ -89,7 +89,7 @@ public class UniversalXStream extends XStream {
 		System.out.println("serialized version:"+s2);
 		com.challengeandresponse.universalxstream.test.Test t2 = (com.challengeandresponse.universalxstream.test.Test) xs2.fromXML(s2);
 		System.out.println(t2);
-		
+
 		System.out.println("\nSerialize and deserialize with all Test.class fields excluded");
 		UniversalXStream.excludeClasses(com.challengeandresponse.universalxstream.test.Test.class);
 		UniversalXStream xs3 = new UniversalXStream();
@@ -97,8 +97,8 @@ public class UniversalXStream extends XStream {
 		System.out.println("serialized version:"+s3);
 		com.challengeandresponse.universalxstream.test.Test t3 = (com.challengeandresponse.universalxstream.test.Test) xs3.fromXML(s3);
 		System.out.println(t3);
-		
+
 	}
-	
-	
+
+
 }
